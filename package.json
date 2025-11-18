@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/gagankumar8294/TripzSearch-Backend#readme",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "express": "^5.1.0"
   }
 }
