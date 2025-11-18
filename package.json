@@ -1,0 +1,23 @@
+{
+  "name": "tripzsearch-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gagankumar8294/TripzSearch-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gagankumar8294/TripzSearch-Backend/issues"
+  },
+  "homepage": "https://github.com/gagankumar8294/TripzSearch-Backend#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
