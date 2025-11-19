@@ -1,4 +1,5 @@
 import express from "express";
+import cors from 'cors';
 import bodyParser from "body-parser";
 import toursRouter from "./src/tours/tours.router.js";
 import AdminRouter from './src/admin/admin.routes.js'
@@ -11,6 +12,13 @@ const server = express();
 
 // Connect to MongoDB
 await connectDB();
+
+// CORS - allow any frontend to use API
+server.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 // Middlewares
 server.use(bodyParser.json());

@@ -1,17 +1,15 @@
-// tours.controller.js
-
 import ToursModel from "./tours.model.js";
 
 export default class ToursController {
 
-  getAll(req, res) {
-    const allTours = ToursModel.GetAll();
+  async getAll(req, res) {
+    const allTours = await ToursModel.GetAll();
     res.status(200).send(allTours);
   }
 
-  getById(req, res) {
+  async getById(req, res) {
     const id = req.params.id;
-    const tour = ToursModel.GetById(id);
+    const tour = await ToursModel.GetById(id);
 
     if (!tour) {
       return res.status(404).send({ message: "Tour not found" });
@@ -20,19 +18,30 @@ export default class ToursController {
     res.status(200).send(tour);
   }
 
-  add(req, res) {
-    const { title, destination, price, startDate, duration, imageUrl } = req.body;
+  async add(req, res) {
+    const { title, destination, price, startDate, duration } = req.body;
 
-    const newTour = ToursModel.Add(
+    // If image is uploaded, get the filepath
+    const imageUrl = req.file ? req.file.path : null;
+
+    const newTour = await ToursModel.Add(
       title, destination, price, startDate, duration, imageUrl
     );
 
     res.status(201).send(newTour);
   }
 
-  update(req, res) {
+  async update(req, res) {
     const id = req.params.id;
-    const updated = ToursModel.Update(id, req.body);
+
+    const data = req.body;
+
+    // If image uploaded, replace old image
+    if (req.file) {
+      data.imageUrl = req.file.path;
+    }
+
+    const updated = await ToursModel.Update(id, data);
 
     if (!updated) {
       return res.status(404).send({ message: "Tour not found" });
@@ -41,9 +50,10 @@ export default class ToursController {
     res.status(200).send(updated);
   }
 
-  delete(req, res) {
+  async delete(req, res) {
     const id = req.params.id;
-    const deleted = ToursModel.Delete(id);
+
+    const deleted = await ToursModel.Delete(id);
 
     if (!deleted) {
       return res.status(404).send({ message: "Tour not found" });
