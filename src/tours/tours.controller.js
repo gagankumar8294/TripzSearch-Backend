@@ -19,13 +19,22 @@ export default class ToursController {
   }
 
   async add(req, res) {
-    const { title, destination, price, startDate, duration } = req.body;
+    console.log("BODY:", req.body);
 
-    // If image is uploaded, get the filepath
-    const imageUrl = req.file ? req.file.path : null;
+    const { title, destination, price, startDate, duration, imageUrl } = req.body;
+
+    // Validate required fields
+    if (!title || !destination || !price) {
+      return res.status(400).send({ message: "Missing required fields" });
+    }
 
     const newTour = await ToursModel.Add(
-      title, destination, price, startDate, duration, imageUrl
+      title,
+      destination,
+      price,
+      startDate,
+      duration,
+      imageUrl // this is just a string url
     );
 
     res.status(201).send(newTour);
@@ -33,13 +42,7 @@ export default class ToursController {
 
   async update(req, res) {
     const id = req.params.id;
-
-    const data = req.body;
-
-    // If image uploaded, replace old image
-    if (req.file) {
-      data.imageUrl = req.file.path;
-    }
+    const data = req.body; // imageUrl allowed here too
 
     const updated = await ToursModel.Update(id, data);
 

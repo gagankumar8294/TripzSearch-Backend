@@ -21,7 +21,9 @@ server.use(cors({
 }));
 
 // Middlewares
-server.use(bodyParser.json());
+server.use(express.json({ limit: "50mb" }));
+server.use(express.urlencoded({ extended: true, limit: "50mb" }));
+
 
 // Routes
 server.use('/api/tours', toursRouter);

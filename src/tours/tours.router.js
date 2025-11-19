@@ -3,7 +3,7 @@
 import express from "express";
 import ToursController from "./tours.controller.js";
 import jwtAuth from "../middlewares/jwt.middleware.js";
-import { upload } from "../middlewares/fileupload.middleware.js";
+
 
 const toursRouter = express.Router();
 const toursController = new ToursController();
@@ -15,10 +15,10 @@ toursRouter.get("/", (req, res) => toursController.getAll(req, res));
 toursRouter.get("/:id", (req, res) => toursController.getById(req, res));
 
 // CREATE tour
-toursRouter.post("/", jwtAuth, upload.single("image"), (req, res) => toursController.add(req, res));
+toursRouter.post("/",   (req, res) => toursController.add(req, res));
 
 // UPDATE tour
-toursRouter.put("/:id", jwtAuth, upload.single("image"), (req, res) => toursController.update(req, res));
+toursRouter.put("/:id", jwtAuth,  (req, res) => toursController.update(req, res));
 
 // DELETE tour
 toursRouter.delete("/:id", jwtAuth, (req, res) => toursController.delete(req, res));

@@ -4,26 +4,49 @@ import { ObjectId } from "mongodb";
 export default class ToursModel {
 
   // CREATE TOUR
-  static async Add(title, destination, price, startDate, duration, imageUrl) {
-    const result = await DB.collection("tours").insertOne({
-      title,
-      destination,
-      price,
-      startDate,
-      duration,
-      imageUrl
-    });
+  // static async Add(title, destination, price, startDate, duration, imageUrl) {
+  //   const result = await DB.collection("tours").insertOne({
+  //     title,
+  //     destination,
+  //     price,
+  //     startDate,
+  //     duration,
+  //     imageUrl
+  //   });
 
-    return {
-      id: result.insertedId,
-      title,
-      destination,
-      price,
-      startDate,
-      duration,
-      imageUrl
-    };
-  }
+  //   return {
+  //     id: result.insertedId,
+  //     title,
+  //     destination,
+  //     price,
+  //     startDate,
+  //     duration,
+  //     imageUrl
+  //   };
+  // }
+
+  static async Add(title, destination, price, startDate, duration, imageUrl) {
+  const result = await DB.collection("tours").insertOne({
+    title,
+    destination,
+    price,
+    startDate,
+    duration,
+    imageUrl
+  });
+
+  return {
+    id: result.insertedId,
+    title,
+    destination,
+    price,
+    startDate,
+    duration,
+    imageUrl
+  };
+}
+
+
 
   // GET ALL TOURS
   static async GetAll() {
