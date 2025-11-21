@@ -4,49 +4,31 @@ import { ObjectId } from "mongodb";
 export default class ToursModel {
 
   // CREATE TOUR
-  // static async Add(title, destination, price, startDate, duration, imageUrl) {
-  //   const result = await DB.collection("tours").insertOne({
-  //     title,
-  //     destination,
-  //     price,
-  //     startDate,
-  //     duration,
-  //     imageUrl
-  //   });
-
-  //   return {
-  //     id: result.insertedId,
-  //     title,
-  //     destination,
-  //     price,
-  //     startDate,
-  //     duration,
-  //     imageUrl
-  //   };
-  // }
-
   static async Add(title, destination, price, startDate, duration, imageUrl) {
-  const result = await DB.collection("tours").insertOne({
-    title,
-    destination,
-    price,
-    startDate,
-    duration,
-    imageUrl
-  });
+    const result = await DB.collection("tours").insertOne({
+      title,
+      destination,
+      price,
+      startDate,
+      duration,
+      imageUrl
+    });
 
-  return {
-    id: result.insertedId,
-    title,
-    destination,
-    price,
-    startDate,
-    duration,
-    imageUrl
-  };
-}
+    return {
+      id: result.insertedId,
+      title,
+      destination,
+      price,
+      startDate,
+      duration,
+      imageUrl
+    };
+  }
 
-
+  // Helper: detect whether id is valid ObjectId
+  static formatId(id) {
+    return ObjectId.isValid(id) ? new ObjectId(id) : id;
+  }
 
   // GET ALL TOURS
   static async GetAll() {
@@ -55,26 +37,43 @@ export default class ToursModel {
 
   // GET BY ID
   static async GetById(id) {
-    return await DB.collection("tours").findOne({ _id: new ObjectId(id) });
+    const formattedId = this.formatId(id);
+
+    return await DB.collection("tours").findOne({
+      _id: formattedId
+    });
   }
 
   // UPDATE TOUR
   static async Update(id, data) {
-    const updated = await DB.collection("tours").findOneAndUpdate(
-      { _id: new ObjectId(id) },
-      { $set: data },
-      { returnDocument: "after" }
-    );
+  const formattedId = this.formatId(id);
 
-    return updated.value;
-  }
+  const options = {
+    returnDocument: "after",
+    returnOriginal: false
+  };
 
-  // DELETE TOUR
-  static async Delete(id) {
-    const deleted = await DB.collection("tours").findOneAndDelete({
-      _id: new ObjectId(id)
-    });
+  const updated = await DB.collection("tours").findOneAndUpdate(
+    { _id: formattedId },
+    { $set: data },
+    options
+  );
 
-    return deleted.value;
-  }
+  return updated.value || await DB.collection("tours").findOne({ _id: formattedId });
+}
+
+
+
+static async Delete(id) { 
+  const formattedId = this.formatId(id); 
+  const deleted = await DB.collection("tours").findOneAndDelete({ _id: formattedId }); 
+  // deleted.value contains the deleted document 
+  if (!deleted.value) { 
+    return null; 
+    // nothing was deleted 
+    } return true; 
+    // deletion successful 
+    }
+
+
 }

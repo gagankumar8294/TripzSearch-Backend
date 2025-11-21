@@ -5,10 +5,18 @@ import toursRouter from "./src/tours/tours.router.js";
 import AdminRouter from './src/admin/admin.routes.js'
 import connectDB from "./config/db.js";
 import dotenv from "dotenv";
+import multer from "multer";
 
 dotenv.config();
 
 const server = express();
+
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
+
+// For form-data (multipart/form-data)
+const upload = multer();
+server.use(upload.none());
 
 // Connect to MongoDB
 await connectDB();

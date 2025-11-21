@@ -19,8 +19,6 @@ export default class ToursController {
   }
 
   async add(req, res) {
-    console.log("BODY:", req.body);
-
     const { title, destination, price, startDate, duration, imageUrl } = req.body;
 
     // Validate required fields
@@ -43,7 +41,6 @@ export default class ToursController {
   async update(req, res) {
     const id = req.params.id;
     const data = req.body; // imageUrl allowed here too
-
     const updated = await ToursModel.Update(id, data);
 
     if (!updated) {
@@ -53,15 +50,14 @@ export default class ToursController {
     res.status(200).send(updated);
   }
 
-  async delete(req, res) {
-    const id = req.params.id;
+async delete(req, res) { 
+  const id = req.params.id; 
+  const deleted = await ToursModel.Delete(id); 
+  console.log('data after deleting from model', deleted) 
+  res.status(200).send({ message: "Tour deleted successfully" }); 
+}
 
-    const deleted = await ToursModel.Delete(id);
 
-    if (!deleted) {
-      return res.status(404).send({ message: "Tour not found" });
-    }
 
-    res.status(200).send({ message: "Tour deleted successfully" });
-  }
+
 }
