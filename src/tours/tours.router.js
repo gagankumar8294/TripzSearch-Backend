@@ -15,12 +15,12 @@ toursRouter.get("/", (req, res) => toursController.getAll(req, res));
 toursRouter.get("/:id",  (req, res) => toursController.getById(req, res));
 
 // CREATE tour
-toursRouter.post("/", jwtAuth,  (req, res) => toursController.add(req, res));
+toursRouter.post("/",   (req, res) => toursController.add(req, res));
 
 // UPDATE tour
-toursRouter.put("/:id", jwtAuth, (req, res) => toursController.update(req, res));
+toursRouter.put("/:id",  (req, res) => toursController.update(req, res));
 
 // DELETE tour
-toursRouter.delete("/:id", jwtAuth, (req, res) => toursController.delete(req, res));
+toursRouter.delete("/:id",  (req, res) => toursController.delete(req, res));
 
 export default toursRouter;
