@@ -10,6 +10,11 @@ mongodb full url -
 mongodb+srv://skygamer2k25_db_user:qhdn7TRunYjB5yxf@cluster0.icgj1u2.mongodb.net/?appName=Cluster0
 
 ------- HOW TO RUN LOCALLY ------------
+
+step 1.
+npm i - Installs required modules and packages
+
+Step 2.
 command to run project - node server.js
 
 
