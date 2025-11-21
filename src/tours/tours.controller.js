@@ -53,7 +53,6 @@ export default class ToursController {
 async delete(req, res) { 
   const id = req.params.id; 
   const deleted = await ToursModel.Delete(id); 
-  console.log('data after deleting from model', deleted) 
   res.status(200).send({ message: "Tour deleted successfully" }); 
 }
 
